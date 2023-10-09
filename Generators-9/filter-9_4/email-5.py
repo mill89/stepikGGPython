@@ -1,3 +1,4 @@
+# нужно оставить только корректно записанные адреса
 from string import ascii_letters as alt, digits as dig
 
 
@@ -12,4 +13,4 @@ def check_email(email):
 
 
 emails = input().split()
-print(*filter(lambda mail: check_email(mail), emails))
+print(*filter(check_email, emails))
