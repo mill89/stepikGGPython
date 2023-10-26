@@ -1,32 +1,60 @@
+import datetime
+
 DATABASE = {
-    'Серёга': 'Омск',
+    'Сергей': 'Омск',
     'Соня': 'Москва',
+    'Алексей': 'Калининград',
     'Миша': 'Москва',
     'Дима': 'Челябинск',
     'Алина': 'Красноярск',
     'Егор': 'Пермь',
-    'Коля': 'Красноярск'
+    'Коля': 'Красноярск',
+    'Артём': 'Владивосток',
+    'Петя': 'Михайловка'
+}
+
+UTC_OFFSET = {
+    'Москва': 3,
+    'Санкт-Петербург': 3,
+    'Новосибирск': 7,
+    'Екатеринбург': 5,
+    'Нижний Новгород': 3,
+    'Казань': 3,
+    'Челябинск': 5,
+    'Омск': 6,
+    'Самара': 4,
+    'Ростов-на-Дону': 3,
+    'Уфа': 5,
+    'Красноярск': 7,
+    'Воронеж': 3,
+    'Пермь': 5,
+    'Волгоград': 3,
+    'Краснодар': 3,
+    'Калининград': 2,
+    'Владивосток': 10
 }
 
 
-# Новая функция, она возвращает правильное словосочетание, склоняя слово "друзья"
-# в зависимости от того, какое число передано в аргументе friends_count
-def format_friends_count(friends_count):
-    if friends_count == 1:
+def format_count_friends(count_friends):
+    if count_friends == 1:
         return '1 друг'
-    elif 2 <= friends_count <= 4:
-        return f'{friends_count} друга'
+    elif 2 <= count_friends <= 4:
+        return f'{count_friends} друга'
     else:
-        return f'{friends_count} друзей'
+        return f'{count_friends} друзей'
+
+
+def what_time(city):
+    offset = UTC_OFFSET[city]
+    city_time = datetime.datetime.utcnow() + datetime.timedelta(hours=offset)
+    f_time = city_time.strftime("%H:%M")
+    return f_time
 
 
 def process_anfisa(query):
     if query == 'сколько у меня друзей?':
         count = len(DATABASE)
-        # Вызовите функцию format_friends_count() и передайте в неё count.
-        # Отредактируйте строку ниже: в ней должно использоваться выражение,
-        # которое вернёт функция format_friends_count()
-        return f'У тебя {format_friends_count(count)}.'
+        return f'У тебя {format_count_friends(count)}.'
     elif query == 'кто все мои друзья?':
         friends_string = ', '.join(DATABASE)
         return f'Твои друзья: {friends_string}'
@@ -34,34 +62,50 @@ def process_anfisa(query):
         unique_cities = set(DATABASE.values())
         cities_string = ', '.join(unique_cities)
         return f'Твои друзья в городах: {cities_string}'
-    return '<неизвестный запрос>'
-
-
-def process_query(query):
-    name = query.split(',')[0]
-    if name == "Анфиса":
-        return process_anfisa(query.split(',')[1].strip())
-    return process_friend(name, query.split(',')[1].strip())
-
-
+    else:
+        return '<неизвестный запрос>'
 
 
 def process_friend(name, query):
     if name in DATABASE:
+        city = DATABASE[name]
         if query == 'ты где?':
-            return f'{name} в городе {DATABASE[name]}'
-        return '<неизвестный запрос>'
-    return f'У тебя нет друга по имени {name}'
+            return f'{name} в городе {city}'
+        elif query == 'который час?':
+            if DATABASE[name] in UTC_OFFSET:
+                tm = datetime.datetime.utcnow() + datetime.timedelta(hours=UTC_OFFSET[DATABASE[name]])
+                return f'Там сейчас {tm.strftime("%H:%M")}'
+            return f'<не могу определить время в городе {DATABASE[name]}>'
+        else:
+            return '<неизвестный запрос>'
+    else:
+        return f'У тебя нет друга по имени {name}'
 
 
-print('Привет, я Анфиса!')
+def process_query(query):
+    elements = query.split(', ')
+    if elements[0] == 'Анфиса':
+        return process_anfisa(elements[1])
+    else:
+        return process_friend(elements[0], elements[1])
 
-print(process_query('Анфиса, сколько у меня друзей?'))
-print(process_query('Анфиса, кто все мои друзья?'))
-print(process_query('Анфиса, где все мои друзья?'))
-print(process_query('Анфиса, кто виноват?'))
 
-print(process_query('Соня, ты где?'))
+def runner():
+    queries = [
+        'Анфиса, сколько у меня друзей?',
+        'Анфиса, кто все мои друзья?',
+        'Анфиса, где все мои друзья?',
+        'Анфиса, кто виноват?',
+        'Коля, ты где?',
+        'Соня, что делать?',
+        'Антон, ты где?',
+        'Алексей, который час?',
+        'Артём, который час?',
+        'Антон, который час?',
+        'Петя, который час?'
+    ]
+    for query in queries:
+        print(query, '-', process_query(query))
 
-print(process_query('Коля, что делать?'))
-print(process_query('Антон, ты где?'))
+
+runner()
