@@ -1,4 +1,5 @@
-import datetime
+import datetime as dt
+import requests
 
 DATABASE = {
     'Сергей': 'Омск',
@@ -46,9 +47,25 @@ def format_count_friends(count_friends):
 
 def what_time(city):
     offset = UTC_OFFSET[city]
-    city_time = datetime.datetime.utcnow() + datetime.timedelta(hours=offset)
+    city_time = dt.datetime.utcnow() + dt.timedelta(hours=offset)
     f_time = city_time.strftime("%H:%M")
     return f_time
+
+
+def what_weather(city):
+    url = f'http://wttr.in/{city}'
+    weather_parameters = {
+        'format': 2,
+        'M': ''
+    }
+    try:
+        response = requests.get(url, params=weather_parameters)
+    except requests.ConnectionError:
+        return '<сетевая ошибка>'
+    if response.status_code == 200:
+        return response.text
+    else:
+        return '<ошибка на сервере погоды>'
 
 
 def process_anfisa(query):
@@ -71,13 +88,19 @@ def process_friend(name, query):
         city = DATABASE[name]
         if query == 'ты где?':
             return f'{name} в городе {city}'
+
         elif query == 'который час?':
-            if DATABASE[name] in UTC_OFFSET:
-                tm = datetime.datetime.utcnow() + datetime.timedelta(hours=UTC_OFFSET[DATABASE[name]])
-                return f'Там сейчас {tm.strftime("%H:%M")}'
-            return f'<не могу определить время в городе {DATABASE[name]}>'
+            if city not in UTC_OFFSET:
+                return f'<не могу определить время в городе {city}>'
+            time = what_time(city)
+            return f'Там сейчас {time}'
+
+        elif query == 'как погода?':
+            return what_weather(city)
+
         else:
             return '<неизвестный запрос>'
+
     else:
         return f'У тебя нет друга по имени {name}'
 
@@ -102,7 +125,10 @@ def runner():
         'Алексей, который час?',
         'Артём, который час?',
         'Антон, который час?',
-        'Петя, который час?'
+        'Петя, который час?',
+        'Коля, как погода?',
+        'Соня, как погода?',
+        'Антон, как погода?'
     ]
     for query in queries:
         print(query, '-', process_query(query))
