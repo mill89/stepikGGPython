@@ -29,7 +29,7 @@ def is_valid_position(row, col):
             if 0 <= x < N and 0 <= y < N and P[x][y] == 1:
                 return False
     return True
-
+#  if not np.any(P[i-1:i+2, j-1:j+2]):
 
 random.seed(1)
 
