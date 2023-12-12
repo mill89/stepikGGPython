@@ -2,3 +2,6 @@
 .__pycache__
 .git
 venv/pyvenv.cfg
+ex1.py
+ex2.py
+ex3.py
