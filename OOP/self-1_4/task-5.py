@@ -1,8 +1,8 @@
 class Graph:
-    def set_data(self, data: list):
+    def set_data(self, data: list) -> None:
         self.data = data
 
-    def draw(self):
+    def draw(self) -> str:
         LIMIT_Y = [0, 10]
         return ' '.join(str(n) for n in self.data
                         if n in range(LIMIT_Y[0], LIMIT_Y[1] + 1))
