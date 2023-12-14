@@ -2,17 +2,22 @@ class DataBase:
     lst_data = []
     FIELDS = ('id', 'name', 'old', 'salary')
 
-    def select(self, a: int, b: int) -> None:
+    def select(self, a: int, b: int) -> list[dict]:
         '''выводит список в заданном диапазоне'''
-        if b > len(self.lst_data):  # если диапазон превышает длину списка
-            b = len(self.lst_data)
+        return self.lst_data[a: b + 1] # если диапазон превышает длину списка
 
-        for i in range(a - 1, b):  # вывод списка построчно
-            print(self.lst_data[i])
+        # if b > len(self.lst_data):
+        #     b = len(self.lst_data)
+        #
+        # for i in range(a - 1, b):  # вывод списка построчно
+        #     print(self.lst_data[i])
 
     def insert(self, data: list) -> None:
         '''преобразуем список строк в список словарей, с ключами из FIELDS'''
-        self.lst_data = [{self.FIELDS[i]: x for i, x in enumerate(d.split())} for d in data]
+        for x in data:
+            self.lst_data.append(dict(zip(self.FIELDS, x.split())))
+
+        # self.lst_data = [{self.FIELDS[i]: x for i, x in enumerate(d.split())} for d in data]
 
 
 if __name__ == '__main__':
@@ -20,4 +25,4 @@ if __name__ == '__main__':
 
     db = DataBase()
     db.insert(lst)
-    db.select(1, 50)
+    print(db.select(0, 5887))
