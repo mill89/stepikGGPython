@@ -1,23 +1,27 @@
 class CPU:
-    def __init__(self, name, fr):
+    # процессор
+    def __init__(self, name: str, fr: str) -> None:
         self.name = name  # наименование
         self.fr = fr  # тактовая частота
 
 
 class Memory:
-    def __init__(self, name, volume):
+    # Оперативная памать
+    def __init__(self, name: str, volume: str) -> None:
         self.name = name  # наименование
         self.volume = volume  # объем памяти
 
 
 class MotherBoard:
-    def __init__(self, name, cpu, *args):
+    # Материнская плата
+    def __init__(self, name: str, cpu: CPU, *args: Memory) -> None:
         self.total_mem_slots = 4  # число слотов памяти, не меняется
         self.name = name  # наименование
         self.cpu = cpu  # ссылка на объект класса CPU
         self.mem_slots = args  # список объектов класса Memory
 
-    def get_config(self):
+    # вывод конфигурации компьютера
+    def get_config(self) -> str:
         # создаем список из объектов класса Memory, имя - объем
         lst = [f'{m.name} - {m.volume},' for m in self.mem_slots]
 
