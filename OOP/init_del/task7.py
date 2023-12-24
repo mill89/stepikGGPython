@@ -36,6 +36,7 @@ if __name__ == '__main__':
     mem = Memory('king', '8 Gb')
     mem2 = Memory('nking', '4 Gb')
     mem3 = Memory('jing', '2 Gb')
-    mb = MotherBoard('Asus', cpu, mem, mem2, mem3)
+    mem4 = Memory('yafng', '16 Gb')
+    mb = MotherBoard('Asus', cpu, mem, mem2, mem3, mem4)
 
     print(mb.get_config())
