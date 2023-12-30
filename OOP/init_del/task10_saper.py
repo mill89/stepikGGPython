@@ -4,7 +4,7 @@ from random import randint
 class Cell:
     '''Представление клетки игрового поля'''
 
-    def __init__(self, alround_mines: int = 0, mine: bool = False):
+    def __init__(self, alround_mines: int = 0, mine: bool = False) -> None:
         self.alround_mines = alround_mines  # число мин вокруг данной клетки поля
         self.mine = mine  # наличие мины в текущей клетки
         self.fl_open = True  # открыта / закрыта клетка
@@ -13,14 +13,14 @@ class Cell:
 class GamePole:
     '''Игровое поле с числом клеток, N x N '''
 
-    def __init__(self, N, M):
+    def __init__(self, N: int, M: int) -> None:
         self._n = N  # размер поля
         self._m = M  # общее число мин на поле
         # двумерный список N x N, хранящий объекты класса Cell
         self.pole = [[Cell() for n in range(self._n)] for n in range(self._n)]
         self.init()
 
-    def init(self):
+    def init(self) -> None:
         # инициализация поля с новой растановкой мин М (случайным обраом по игровому полю, каждая мина должна
         # находится в отделной клетке)
         m = 0
@@ -33,6 +33,7 @@ class GamePole:
             self.pole[i][j].mine = True
             m += 1
 
+        # проверка на количество мин вокруг клетки и запись количества в клетку
         indx = (-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)
         for x in range(self._n):
             for y in range(self._n):
