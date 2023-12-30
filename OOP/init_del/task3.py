@@ -20,6 +20,8 @@ if __name__ == '__main__':
         x += 2
         y += 2
 
+    # points = [Point(2 * i + 1, 2 * i + 1) for i in range(1, 1001)]  # 2 вариант
+
     points[1].color = 'yellow'
     print(points[1].__dict__)
     print(points[5].__dict__)

@@ -1,12 +1,8 @@
-import random
+from random import randint, choice
 
 
 class Figure:
     def __init__(self, a, b, c, d):
-        self.a = a
-        self.b = b
-        self.c = c
-        self.d = d
         self.sp = (a, b)  # верхний правый угол
         self.ep = (c, d)  # нижний левый угол
 
@@ -41,24 +37,28 @@ if __name__ == '__main__':
 
     # создает список с указаным числом объектов, которые выбираются случайно из списка, со случайными координатами
     for i in range(1, 218):
-        coor = tuple(random.randint(1, 1000) for _ in range(4))
-        elements.append(random.choice(cl)(*coor))
+        coor = tuple(randint(1, 1000) for _ in range(4))
+        elements.append(choice(cl)(*coor))
 
     # выводит 10, случайных объектов из списка, elements
     for _ in range(10):
-        inx = random.randint(1, 217)
+        inx = randint(1, 217)
         print(
             f'верхний п. у.: {elements[inx].sp}; \nнижний л. у.: {elements[inx].ep}; \nкласс: {elements[inx].__class__}\n')
 
     print('-' * 100)
 
     # обнулить все объекты для класса Line из списка elements
-    for i, clss in enumerate(elements):
-        if isinstance(clss, Line):
-            elements[i] = Line(0, 0, 0, 0)
+    # for i, clss in enumerate(elements):
+    #     if isinstance(clss, Line):
+    #         elements[i] = Line(0, 0, 0, 0)
+    # или:
+    for obj in elements:
+        if isinstance(obj, Line):
+            obj.sp = obj.ep = 0, 0
 
     # смотрим результат, если в списке есть объекты класса Line, его аргументы должны быть равны 0
     for _ in range(10):
-        inx = random.randint(1, 217)
+        inx = randint(1, 217)
         print(
             f'верхний п. у.: {elements[inx].sp}; \nнижний л. у.: {elements[inx].ep}; \nкласс: {elements[inx].__class__}\n')

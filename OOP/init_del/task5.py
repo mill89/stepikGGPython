@@ -9,7 +9,12 @@ class TriangleChecker:
 
         if any(map(lambda x: not isinstance(x, int | float), t)):
             return '1 - не число'
-        if any(map(lambda n: n <= 0, t)):
+
+        if not all(map(lambda x: x > 0, t)):
+            return '4 - отрицательное число'
+
+        a, b, c = self.a, self.b, self.c
+        if a >= b + c or b >= a + c or c >= a + b:
             return '2 - не являются длинами сторон треугольника'
         return '3 - это треугольник'
 

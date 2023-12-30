@@ -44,21 +44,19 @@ class Cart:
     # получение товаров из корзины в виде списка из строк
     def get_list(self) -> None:
         print(f'{'-' * 100}\nТовары в корзине {len(self.goods)} шт.:\n{'-' * 100}')
-        for i, n in enumerate(self.goods):
-            print(f'{i + 1}. {n.title()}')
+        for i, n in enumerate(self.goods, 1):
+            print(f'{i}. {n.title()}')
         print('-' * 100)
 
 
 if __name__ == '__main__':
     cart = Cart()
+    list_goods = [TV('samsung', 6000), TV('panasonic', 20000), Table('ikea', 15000),
+                  Notebook('Asus', 136000), Notebook('Apple', 150000), Cup('FT', 20)]
 
-    cart.add(TV('samsung', 6000))  # добавление товаров в корзину
-    cart.add(TV('panasonic', 20000))
-    cart.add(Table('ikea', 15000))
-    cart.add(Notebook('Asus', 136000))
-    cart.add(Notebook('Apple', 150000))
-    cart.add(Cup('FT', 20))
+    for obj in list_goods:
+        cart.add(obj)
 
-    cart.remove(4)  # удаляем 3 товар из списка
+    cart.remove(4)  # удаляем 4 товар из списка
 
     cart.get_list()  # вывод товаров в корзине
