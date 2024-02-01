@@ -10,11 +10,11 @@ class TextInput:
         :param name: название для поля (сохраняет передаваемое имя, например, "логин" или "пароль")
         :param size: размер поля ввода (целое число, по умолчанию 10)
         '''
-        # self.name = name
-        # self.size = size | , size: int = 10
-        self.size = len(name)
         self.check_name(name)
         self.name = name
+        # self.size = size | , size: int = 10
+        self.size = len(name)
+
 
     def get_html(self) -> str:
         '''
@@ -32,11 +32,10 @@ class TextInput:
         если проверка не проходит, то генерировать исключение командой:
         raise ValueError("некорректное поле name")
         '''
-        if (3 > len(name)) and (len(name) > 51) and name not in cls.CHARS_CORRECT:
-            # raise ValueError("некорректное поле name")
-            print("некорректное поле name")
-            # return "некорректное поле name"
-
+        if type(name) != str or len(name) < 3 or len(name) > 50:
+            raise ValueError("некорректное поле name")
+        if not set(name) < set(cls.CHARS_CORRECT):
+            raise ValueError("некорректное поле name")
 
 
 class PasswordInput(TextInput):
