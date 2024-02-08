@@ -1,24 +1,29 @@
 class AppStore:
-    apps = []  # список приложений
+    def __init__(self):
+        self.apps = {}
 
-    @classmethod
-    def add_aplication(cls, app):
+
+    def add_aplication(self, app):
         # добавление нового приложения в магазин
-        cls.apps.append(app)
+        self.apps[id(app)] = app
 
-    @classmethod
-    def remove_aplication(cls, app):
+
+    def remove_aplication(self, app):
         # удаление приложения из магазина
-        cls.apps.remove(app)
+        self.apps.pop(id(app))
 
     def block_aplication(self, app):
         # блокировка приложения app (устанавливает локальное свойство blocked = True)
-        app.blocked = True
+        obj = self.apps.get(id(app), False)
+        if not obj:
+            return False
+        obj.blocked = True
+        return False
 
-    @classmethod
-    def total_apps(cls):
+
+    def total_apps(self):
         # возвращает общее число приложений в магазине
-        return len(cls.apps)
+        return len(self.apps)
 
 
 class Application:
