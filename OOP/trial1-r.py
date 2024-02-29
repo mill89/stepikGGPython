@@ -95,6 +95,8 @@ if __name__ == '__main__':
     rt = Router()
 
     message('hello, Milan and Nadya!', sv2, sv3, rt)
+    message('How are you?', sv3, sv4, rt)
     read_msg(sv3)
+    read_msg(sv4)
 
-    buffer_status()
+    # buffer_status()
