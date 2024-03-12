@@ -1,23 +1,22 @@
 class Money():
-    def __init__(self, mn):
+    def __init__(self, mn: int) -> None:
         self.__money = 0
         if self.__check_money(mn):
-            self.add_money(mn)
+            self.set_money(mn)
 
     @classmethod
-    def __check_money(cls, money):
+    def __check_money(cls, money: int) -> bool:
         return type(money) == int and money >= 0
 
-    def set_money(self, money):
+    def set_money(self, money: int) -> None:
         if self.__check_money(money):
-            self.__money += money
+            self.__money = money
 
-    def get_money(self):
+    def get_money(self) -> int:
         return self.__money
 
-    def add_money(self, money):
-        if self.__check_money(money):
-            self.__money += money
+    def add_money(self, mn: object) -> None:
+        self.__money += mn.get_money()
 
 
 if __name__ == '__main__':
