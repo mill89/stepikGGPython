@@ -1,4 +1,4 @@
-class Money():
+class Money:
     def __init__(self, mn: int) -> None:
         self.__money = 0
         if self.__check_money(mn):
