@@ -1,5 +1,5 @@
 from string import ascii_letters, digits
-from random import choice, randint
+from random import randint
 
 CHARS = ascii_letters + digits + '@._'
 EMAIL_CHARS = ascii_letters + digits + '_'
