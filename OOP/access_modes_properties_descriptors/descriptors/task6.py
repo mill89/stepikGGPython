@@ -17,4 +17,9 @@ class Cell:
 
 
 class TableSheet:
+
     def __init__(self, N, M):
+        self.cells = list(range(N, M))
+
+
+    def create_table(self):
