@@ -23,5 +23,23 @@ class StringValue:
 
 
 class RegisterForm:
-    login = StringValue(ValidateString)
+    login = StringValue(ValidateString())
+    password = StringValue(ValidateString())
+    email = StringValue(ValidateString())
 
+    def __init__(self, login, password, email):
+        self.login = login
+        self.password = password
+        self.email = email
+
+    def get_fields(self):
+        return [self.login, self.password, self.email]
+
+    def show(self):
+        print(f'<form>\nЛогин: {self.login}\nПароль: {self.password}\nEmail: {self.email}\n</form>')
+
+
+if __name__ == '__main__':
+    form = RegisterForm('логин', 'пароль', 'email')
+    form.show()
+    print(form.get_fields())
