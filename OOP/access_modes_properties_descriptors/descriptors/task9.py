@@ -2,24 +2,28 @@ class Bag:
     # bag = Bag(max_weight)
     def __init__(self, max_weight):
         self.max_weight = max_weight
-        self._things = []
+        self.__things = []
 
     @property
     def things(self):
-        return self._things
+        return self.__things
 
     def add_things(self, thing):
-        self._things.append(thing)
+        s = self.get_total_weight()
+        if s + thing.weight <= self.max_weight:
+            self.__things.append(thing)
 
     def remove_thing(self, indx):
-        self._things.remove(indx)
+        self.__things.remove(indx)
 
     def get_total_weight(self):
-        weight = sum(map(lambda x: x.weight, self._things))
-        if weight > self.max_weight:
-            return f'Ваша сумка перегружена, на {weight - self.max_weight} грамм! Уберите лишние вещи'
-        else:
-            return f'Вес сумки {weight} грамм, можно еще положить вещи на {self.max_weight - weight} грамм.'
+        weight = sum(t.weight for t in self.__things)
+        return weight
+        # weight = sum(map(lambda x: x.weight, self.__things))
+        # if weight > self.max_weight:
+        #     return f'Ваша сумка перегружена, на {weight - self.max_weight} грамм! Уберите лишние вещи'
+        # else:
+        #     return f'Вес сумки {weight} грамм, можно еще положить вещи на {self.max_weight - weight} грамм.'
 
 
 class Thing:
