@@ -36,9 +36,11 @@ class LessonItem:
     def __setattr__(self, key, value):
         if key in self.d and type(value) is not self.d[key]:
             raise TypeError('Неверный тип присваиваемых данных!')
-        elif key not in self.d:
-            return False
+
         object.__setattr__(self, key, value)
+
+    def __getattr__(self, item):
+        return False
 
     def __delattr__(self, item):
         if item in self.d:
@@ -65,4 +67,4 @@ if __name__ == '__main__':
     for x in module1.lessons:
         print(f'{x.title} > {x.practices} > {x.duration}')
 
-    del module1.lessons[0].title
+    del module1.lessons[0].practices
