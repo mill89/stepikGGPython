@@ -3,10 +3,14 @@ class Dimensions:
     MIN_DIMENSION = 10
 
     def __init__(self, a, b, c):
-        self.__a, self.__b, self.__c = a, b, c
+        self.__a = self.__b = self.__c = None
         self.a = a
         self.b = b
         self.c = c
+
+    @classmethod
+    def __verify_value(cls, value):
+        return cls.MIN_DIMENSION <= value <= cls.MAX_DIMENSION and type(value) in (int, float)
 
     @property
     def a(self):
@@ -14,7 +18,8 @@ class Dimensions:
 
     @a.setter
     def a(self, value):
-        self.__a = value
+        if self.__verify_value(value):
+            self.__a = value
 
     @property
     def b(self):
@@ -22,7 +27,8 @@ class Dimensions:
 
     @b.setter
     def b(self, value):
-        self.__b = value
+        if self.__verify_value(value):
+            self.__b = value
 
     @property
     def c(self):
@@ -30,12 +36,11 @@ class Dimensions:
 
     @c.setter
     def c(self, value):
-        self.__c = value
+        if self.__verify_value(value):
+            self.__c = value
 
     def __setattr__(self, key, value):
-        if not (self.MIN_DIMENSION <= value <= self.MAX_DIMENSION):
-            raise ValueError(f"Значение '{value}' выходит за допустимые пределы.")
-        elif key in ('MIN_DIMENSION', 'MAX_DIMENSION'):
+        if key in ('MIN_DIMENSION', 'MAX_DIMENSION'):
             raise AttributeError('Менять атрибуты MIN_DIMENSION и MAX_DIMENSION запрещено!')
         object.__setattr__(self, key, value)
 
@@ -48,4 +53,4 @@ if __name__ == '__main__':
 
     print(d.__dict__)
 
-    d.MAX_DIMENSION = 10
+    # d.MAX_DIMENSION = 10
