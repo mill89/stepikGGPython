@@ -10,7 +10,7 @@ class ImageFileAcceptor:
 
 
 if __name__ == '__main__':
-    filenames = ['b.oat.jpg', 'dog.jpg', 'c.at.png', 'text.txt', 'python.doc', 'eq.png', 'data.html', 'dack.xls']
+    filenames = ['b.oat.jpg', 'dog.jpeg', 'c.at.png', 'text.txt', 'python.doc', 'eq.png', 'data.html', 'dack.xls']
     acceptor = ImageFileAcceptor(['jpg', 'jpeg', 'bmp'])
     image_filenames = filter(acceptor, filenames)
     print(list(image_filenames))
