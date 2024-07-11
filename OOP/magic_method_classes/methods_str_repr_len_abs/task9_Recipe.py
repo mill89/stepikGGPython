@@ -5,7 +5,7 @@ class Ingridient:
         self._measure = measure
 
     def __str__(self):
-        return f"{self._name}: {self._volume}, {self._measure}"
+        return f"{self._name} - {self._volume} {self._measure}"
 
 
 class Recipe:
@@ -28,9 +28,9 @@ class Recipe:
 
 if __name__ == '__main__':
     recipe = Recipe()
-    recipe.add_ingridients(Ingridient("solt", 1, "spoon"))
-    recipe.add_ingridients(Ingridient("muka", 1, "kg"))
-    recipe.add_ingridients(Ingridient("meat", 10, "kg"))
+    recipe.add_ingridients(Ingridient("Solt", 1, "tea spoon"))
+    recipe.add_ingridients(Ingridient("Flour", 800, "gramm"))
+    recipe.add_ingridients(Ingridient("Lamb meat", 10, "kg"))
     recipe.get_ingridients()
     n = len(recipe)
     print(n)
