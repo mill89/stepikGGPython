@@ -1,22 +1,31 @@
 class NewList:
     def __init__(self, lst=None):
-        self.lst = [] if lst is None else lst
+        self.__lst = lst[:] if lst and type(lst) is list else []
+
+    def get_list(self):
+        return self.__lst
+
+    @staticmethod
+    def __diff_list(lst1, lst2):
+        if len(lst2) == 0:
+            return lst1
+        sub = lst2[:]
+        return [x for x in lst1 if not NewList.__is_elem(x, sub)]
+
+    @staticmethod
+    def __is_elem(x, sub):
+        res = any(map(lambda xx: type(x) is type(xx) and x == xx, sub))
+        if res:
+            sub.remove(x)
+        return res
 
     def __sub__(self, other):
         print('__sub__')
-        if not self.lst:
-            return self.lst
+        if type(other) not in (list, NewList):
+            raise ArithmeticError("Правый операнд должен быть тип list или NewList")
 
-        if isinstance(other, NewList):
-            other_lst = other.lst
-        else:
-            other_lst = other
-
-        ls = self.lst[:]
-        for elem in other_lst:
-            new_list = [x for x in ls if not (x == elem and type(x) is type(elem))]
-        self.lst = new_list
-        return self
+        other_list = other if type(other) is list else other.get_list()
+        return NewList(self.__diff_list(self.__lst, other_list))
 
     def __isub__(self, other):
         print("__isub__")
@@ -24,21 +33,18 @@ class NewList:
 
     def __rsub__(self, other):
         print('__rsub__')
-        if self.lst:
-            self.lst = [x for x in other if x not in self.lst]
-        return self
-
-    def get_lst(self):
-        print(self.lst)
+        if type(other) is not list:
+            raise ArithmeticError("Правый операнд должен быть тип list или NewList")
+        return NewList(self.__diff_list(other, self.__lst))
 
 
 if __name__ == '__main__':
     lst1 = NewList([1, 2, -4, 6, 10, 11, 15, False, True])
     lst2 = NewList([1, 2, 3, True])
 
-    # res1 = lst1 - lst2
-    # lst1 -= lst2
+    res1 = lst1 - lst2
+    lst1 -= lst2
     res2 = lst2 - [0, True]
-    # res4 = [1, 2, 3, 4.5] - res2
+    res4 = [1, 2, 3, 4.5] - res2
 
-    res2.get_lst()
+    print(res4.get_list())
